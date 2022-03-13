@@ -3,30 +3,43 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { height } from '@mui/system';
-import { sizing } from '@mui/system';
+import { Button, Typography } from '@mui/material';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: "gray",
+const ItemMenu = styled(Paper)(({ theme }) => ({
+    backgroundColor: "white",
     ...theme.typography.body2,
-    padding: theme.spacing(1),
+    padding: theme.spacing(0),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    height: "100vh"
 }));
+
+const ItemWindow = styled(Paper)(({ theme }) => ({
+    backgroundColor: "#80808066",
+    ...theme.typography.body2,
+    padding: theme.spacing(0),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    height: "100vh"
+}));
+
+
 
 export default function FullWidthGrid() {
     return (
         <Box
             sx={{
                 flexGrow: 1,
-                height: "75%",
+                height: "100vh",
             }}>
-            <Grid container spacing={2} height="75%">
-                <Grid item xs={3} lg={3}>
-                    <Item>xs=6 md=8</Item>
+            <Grid container height="100vh">
+                <Grid  item xs={3} lg={3}>
+                    <ItemMenu sx={{fontSize:40}}>Menu</ItemMenu>
+                    <Button>Hlavná stránka</Button>
                 </Grid>
-                <Grid>
-                    <Item>Hlavná stránka</Item>
+            
+                <Grid item xs={3} lg={9}>
+                    <ItemWindow>Hlavná stránka</ItemWindow>
                 </Grid>
 
             </Grid>

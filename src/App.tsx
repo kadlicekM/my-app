@@ -8,7 +8,6 @@ import FullWidthGrid from './components/grid/grid';
 function App() {
   return (
     <div className="App">
-      <Button>Click me</Button>
       <FullWidthGrid></FullWidthGrid>
     </div>
 
