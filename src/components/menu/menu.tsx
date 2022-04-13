@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography'
 import PersonIcon from '@mui/icons-material/Person'
 import Divider from '@mui/material/Divider'
 import { Link } from 'react-router-dom'
-import { Box } from '@mui/system'
 import { BottomInfo } from 'components/menu/bottom-data'
 
 type MenuItem = {
