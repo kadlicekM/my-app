@@ -1,18 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import BasicButtons from './button/button';
-import { Button } from '@mui/material';
-import FullWidthGrid from './components/grid/grid';
+import './App.css'
+import { Layout } from './components/layout/layout'
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
-  return (
-    <div className="App">
-      <FullWidthGrid></FullWidthGrid>
-    </div>
-
-
-  );
+	return (
+		<BrowserRouter>
+			<Layout />
+		</BrowserRouter>
+	)
 }
 
-export default App;
+export default App
