@@ -5,23 +5,35 @@ import { SxProps } from '@mui/system'
 
 type Props = {
 	title: string
-	children: React.ReactChild
+	children: React.ReactChild | React.ReactChild[]
 	sx?: SxProps<Theme>
+	headingSize?: 'small' | 'medium' | 'large'
 }
 
-// let pole = []
+const getHeadingVariant = (size: 'small' | 'medium' | 'large') => {
+	switch (size) {
+		case 'small':
+			return 'h5'
+		case 'medium':
+			return 'h4'
+		default:
+			return 'h3'
+	}
+}
 
-// const pole1 = [1, 2, 3, 4, 5]
-// const pole2 = ['pato', 'rytmus']
-
-// pole = [...pole2, ...pole1]
-
-// console.log({ pole })
-
-export function ContentBox({ title, children, sx }: Props) {
+export function ContentBox({
+	title,
+	children,
+	sx,
+	headingSize = 'medium',
+}: Props) {
 	return (
 		<MuiBox sx={{ ...sx, padding: '20px 40px' }}>
-			<Typography variant="h3" mb={2} sx={{ color: '#ef5350' }}>
+			<Typography
+				variant={getHeadingVariant(headingSize)}
+				mb={2}
+				sx={{ color: '#ef5350' }}
+			>
 				{title}
 			</Typography>
 			{children}

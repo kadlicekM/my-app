@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import Menu from '../menu/menu'
 import { Routes, Route } from 'react-router-dom'
 import { Homepage } from 'routes/homepage/homepage'
-import { Chart } from 'routes/charts/chart'
+import { Stats } from 'routes/stats/stats'
 import { Config } from 'routes/configuration/config'
 //ghostwhite farba bgcolor
 
@@ -36,7 +36,7 @@ export function Layout() {
 			>
 				<Routes>
 					<Route element={<Homepage />} path="/" />
-					<Route element={<Chart />} path="/grafy"></Route>
+					<Route element={<Stats />} path="/grafy"></Route>
 					<Route element={<Config />} path="/konfiguracia" />
 					<Route element={<>hups! 404 </>} path="*" />
 				</Routes>

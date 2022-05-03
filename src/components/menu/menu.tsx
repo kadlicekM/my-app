@@ -21,7 +21,7 @@ const MenuItems: MenuItem[] = [
 		path: 'grafy',
 	},
 	{
-		label: 'KONFIGURACIA',
+		label: 'KONFIGURÁCIA',
 		path: 'konfiguracia',
 	},
 ]
