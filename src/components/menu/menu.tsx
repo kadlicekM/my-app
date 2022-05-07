@@ -5,6 +5,8 @@ import PersonIcon from '@mui/icons-material/Person'
 import Divider from '@mui/material/Divider'
 import { Link } from 'react-router-dom'
 import { BottomInfo } from 'components/menu/bottom-data'
+import LogoutIcon from '@mui/icons-material/Logout'
+import { Box } from '@mui/system'
 
 type MenuItem = {
 	label: string
@@ -33,7 +35,7 @@ function Menu() {
 				Menu
 			</Typography>
 			<Divider />
-			<Stack sx={{ margin: 2, mt: 10 }}>
+			<Stack sx={{ margin: 2, mt: 10, mb: 50 }}>
 				{MenuItems.map(item => (
 					<Button
 						key={item.path}
@@ -59,8 +61,15 @@ function Menu() {
 			</Stack>
 
 			<BottomInfo>
-				<PersonIcon />
-				<Typography variant="body1">&nbsp;&nbsp;login:John Doe</Typography>
+				<Box>
+					<PersonIcon fontSize="large" />
+					<Typography sx={{ mb: 5 }} variant="body1">
+						&nbsp;&nbsp;login:John Doe
+					</Typography>
+					<Link to="/sign-in">
+						<LogoutIcon fontSize="large" />
+					</Link>
+				</Box>
 			</BottomInfo>
 		</>
 	)

@@ -2,10 +2,8 @@ import Grid from '@mui/material/Grid'
 // import SettingsIcon from '@mui/icons-material/Settings'
 
 import Menu from '../menu/menu'
-import { Routes, Route } from 'react-router-dom'
-import { Homepage } from 'routes/homepage/homepage'
-import { Stats } from 'routes/stats/stats'
-import { Config } from 'routes/configuration/config'
+import { Outlet } from 'react-router-dom'
+
 //ghostwhite farba bgcolor
 
 export function Layout() {
@@ -34,12 +32,7 @@ export function Layout() {
 				xl={9}
 				sx={{ bgcolor: 'white', height: '100vh' }}
 			>
-				<Routes>
-					<Route element={<Homepage />} path="/" />
-					<Route element={<Stats />} path="/grafy"></Route>
-					<Route element={<Config />} path="/konfiguracia" />
-					<Route element={<>hups! 404 </>} path="*" />
-				</Routes>
+				<Outlet />
 			</Grid>
 		</Grid>
 	)
