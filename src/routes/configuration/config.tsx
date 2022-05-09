@@ -6,20 +6,31 @@ import BasicTable from 'sections/configuration/sensor-table'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SchemaOf, string, object } from 'yup'
 import { SubmitHandler, FormProvider, useForm } from 'react-hook-form'
-import { ReactHookFormTextFieldContainer } from 'sections/configuration/RHFcontainer'
+//import { ReactHookFormTextFieldContainer } from 'sections/configuration/RHFcontainer'
+import { FormTextField } from 'components/form/formTextField'
+import { number } from 'yup'
+import { ToastContainer, toast } from 'react-toastify'
 
 interface IFormProps {
 	name: string
-	message: string
+	//message: string
 }
 
 const formSchema: SchemaOf<IFormProps> = object({
-	name: string().required('Name is required'),
-	message: string().required('Message is required'),
+	name: string().required('Zadaj názov senzoru'),
+	minValue: number()
+		.required('Zadaj minimálnu hodnotu rozsahu')
+		.typeError('Zadaj číslo'),
+	maxValue: number()
+		.required('Zadaj maximálnu hodnotu rozsahu')
+		.typeError('Zadaj číslo'),
+	unit: string().required('Zadaj jednotku merania'),
+
+	//message: string().required('Message is required'),
 })
 
 export function Config() {
-	const methods = useForm<IFormProps>({
+	const form = useForm<IFormProps>({
 		resolver: yupResolver(formSchema),
 	})
 
@@ -27,7 +38,7 @@ export function Config() {
 		alert(JSON.stringify(data))
 
 	//const onSubmit = (data: IFormProps) => alert(JSON.stringify(data))
-
+	const notify = () => toast('Senzor bol úspešne pridaný') //try-catch block needed
 	return (
 		<Page headerLabel=" Konfigurácia">
 			<Typography variant="h4" m={3} sx={{ color: '#ef5350' }}>
@@ -44,33 +55,69 @@ export function Config() {
 					}}
 				/>
 			</div> */}
-			<Grid container>
-				<FormProvider {...methods}>
-					<form onSubmit={methods.handleSubmit(onSubmit)}>
-						<Grid item xs={8}>
-							<Typography variant="h4" m={3} sx={{ color: '#ef5350' }}>
+			<Grid container pr={3} pl={3} mt={3} mb={3}>
+				<Grid item xs={7}>
+					<FormProvider {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)}>
+							<Typography
+								variant="h4"
+								mb={2}
+								sx={{ color: theme => theme.palette.primary.main }}
+							>
 								Pridanie senzora
 							</Typography>
-							<ReactHookFormTextFieldContainer
-								label="Názov senzora"
-								name="name"
-							/>
-							<Button type="submit" variant="contained" color="primary">
-								Submit
-							</Button>
-						</Grid>
-					</form>
-					<form onSubmit={methods.handleSubmit(onSubmit)}>
-						<Grid item xs={4} flexBasis="60%">
+
 							<Box display="flex" flexDirection="column">
-								<Typography variant="h4" m={3} sx={{ color: '#ef5350' }}>
-									Umiestnenie senzora
-								</Typography>
-								<ReactHookFormTextFieldContainer label="Message" name="jozko" />
+								<Grid container height="250px">
+									<Grid item xs={6} paddingBottom={0}>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Názov senzora"
+											name="name"
+										/>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Minimálna hodnota"
+											name="minValue"
+										/>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Maximálna hodnota"
+											name="maxValue"
+										/>
+									</Grid>
+									<Grid item>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Jednotka"
+											name="unit"
+										/>
+									</Grid>
+								</Grid>
+
+								<Button
+									type="submit"
+									variant="contained"
+									color="primary"
+									sx={{ mt: 2, width: '40%', justifyContent: 'center' }}
+								>
+									Submit
+								</Button>
 							</Box>
-						</Grid>
-					</form>
-				</FormProvider>
+						</form>
+					</FormProvider>
+				</Grid>
+				<Grid item xs={5}>
+					<Box display="flex" flexDirection="column">
+						<Typography
+							variant="h4"
+							sx={{ color: theme => theme.palette.primary.main }}
+							mb={3}
+						>
+							Umiestnenie senzora
+						</Typography>
+					</Box>
+				</Grid>
 			</Grid>
 		</Page>
 	)
