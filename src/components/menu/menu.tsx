@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { BottomInfo } from 'components/menu/bottom-data'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Box } from '@mui/system'
+import { useContext } from 'react'
+import { UserContext } from 'components/user/userContext'
 
 type MenuItem = {
 	label: string
@@ -29,6 +31,8 @@ const MenuItems: MenuItem[] = [
 ]
 
 function Menu() {
+	const { user, logoutUser, loginUser } = useContext(UserContext)
+
 	return (
 		<>
 			<Typography variant="h4" align="center" gutterBottom={true}>
@@ -64,11 +68,11 @@ function Menu() {
 				<Box>
 					<PersonIcon fontSize="large" />
 					<Typography sx={{ mb: 5 }} variant="body1">
-						&nbsp;&nbsp;login:John Doe
+						{user?.login}
 					</Typography>
-					<Link to="/sign-in">
+					<Button onClick={logoutUser}>
 						<LogoutIcon fontSize="large" />
-					</Link>
+					</Button>
 				</Box>
 			</BottomInfo>
 		</>

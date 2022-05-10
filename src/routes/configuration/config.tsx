@@ -25,6 +25,7 @@ const formSchema: SchemaOf<IFormProps> = object({
 		.required('Zadaj maximálnu hodnotu rozsahu')
 		.typeError('Zadaj číslo'),
 	unit: string().required('Zadaj jednotku merania'),
+	area: string().required('Zadaj názov priestora'),
 
 	//message: string().required('Message is required'),
 })
@@ -41,7 +42,7 @@ export function Config() {
 	const notify = () => toast('Senzor bol úspešne pridaný') //try-catch block needed
 	return (
 		<Page headerLabel=" Konfigurácia">
-			<Typography variant="h4" m={3} sx={{ color: '#ef5350' }}>
+			<Typography variant="h4" mt={3} ml={3} mr={3} sx={{ color: '#ef5350' }}>
 				{' '}
 				Prehľadová tabuľka
 			</Typography>
@@ -56,7 +57,7 @@ export function Config() {
 				/>
 			</div> */}
 			<Grid container pr={3} pl={3} mt={3} mb={3}>
-				<Grid item xs={7}>
+				<Grid item xs={6}>
 					<FormProvider {...form}>
 						<form onSubmit={form.handleSubmit(onSubmit)}>
 							<Typography
@@ -67,7 +68,11 @@ export function Config() {
 								Pridanie senzora
 							</Typography>
 
-							<Box display="flex" flexDirection="column">
+							<Box
+								display="flex"
+								flexDirection="column"
+								justifyContent="center" //doesnt work ..why?
+							>
 								<Grid container height="250px">
 									<Grid item xs={6} paddingBottom={0}>
 										<FormTextField
@@ -86,7 +91,7 @@ export function Config() {
 											name="maxValue"
 										/>
 									</Grid>
-									<Grid item>
+									<Grid item xs={6}>
 										<FormTextField
 											sx={{ height: '90px' }}
 											label="Jednotka"
@@ -107,16 +112,71 @@ export function Config() {
 						</form>
 					</FormProvider>
 				</Grid>
-				<Grid item xs={5}>
-					<Box display="flex" flexDirection="column">
-						<Typography
-							variant="h4"
-							sx={{ color: theme => theme.palette.primary.main }}
-							mb={3}
-						>
-							Umiestnenie senzora
-						</Typography>
-					</Box>
+				<Grid item xs={6}>
+					<FormProvider {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)}>
+							<Typography
+								variant="h4"
+								sx={{ color: theme => theme.palette.primary.main }}
+								mb={2}
+							>
+								Pridanie priestoru
+							</Typography>
+							<Box display="flex" flexDirection="column">
+								<Grid container justifyContent="flex-start">
+									<Grid item xs={6}>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Priestor"
+											name="area"
+										/>
+									</Grid>
+								</Grid>
+								<Button
+									type="submit"
+									variant="contained"
+									color="primary"
+									sx={{ width: '40%', justifyContent: 'center' }}
+								>
+									Submit
+								</Button>
+							</Box>
+							<Typography
+								variant="h4"
+								sx={{ color: theme => theme.palette.primary.main }}
+								mb={2}
+								mt={3}
+							>
+								Pridanie priestoru
+							</Typography>
+							<Box display="flex" flexDirection="column">
+								<Grid container justifyContent="flex-start">
+									<Grid item xs={6}>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Priestor"
+											name="area"
+										/>
+									</Grid>
+									<Grid item xs={6}>
+										<FormTextField
+											sx={{ height: '90px' }}
+											label="Priestor"
+											name="area"
+										/>
+									</Grid>
+								</Grid>
+								<Button
+									type="submit"
+									variant="contained"
+									color="primary"
+									sx={{ width: '40%', justifyContent: 'center' }}
+								>
+									Submit
+								</Button>
+							</Box>
+						</form>
+					</FormProvider>
 				</Grid>
 			</Grid>
 		</Page>
