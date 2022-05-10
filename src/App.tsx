@@ -1,4 +1,7 @@
 import './App.css'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { ToastContainer } from 'react-toastify'
 import { Layout } from './components/layout/layout'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Homepage } from 'routes/homepage/homepage'
@@ -36,6 +39,14 @@ function App() {
 					</Routes>
 				</UserContextProvider>
 			</BrowserRouter>
+
+			<ToastContainer
+				position="bottom-center"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+			/>
 		</ThemeProvider>
 	)
 }
