@@ -2,6 +2,7 @@ import { Controller, useFormContext } from 'react-hook-form'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { SxProps, Theme } from '@mui/material'
+import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 
 export type LabeledValue = {
@@ -15,7 +16,7 @@ type Props = {
 	options: LabeledValue[]
 	sx?: SxProps<Theme>
 	disabled?: boolean
-	fullwidth?: boolean
+	onChange?: () => void
 }
 
 export function FormSelectField({
@@ -24,7 +25,7 @@ export function FormSelectField({
 	options,
 	sx,
 	disabled,
-	fullwidth = true,
+	onChange,
 }: Props) {
 	const form = useFormContext()
 
@@ -37,16 +38,20 @@ export function FormSelectField({
 			name={name}
 			control={form.control}
 			render={({ field }) => (
-				<>
+				<Box sx={{ width: 200, ...sx }} mb={2}>
 					<InputLabel sx={{ fontSize: 12 }}>{label}</InputLabel>
 					<Select
 						{...field}
-						sx={{ ...sx }}
 						variant="standard"
+						onChange={e => {
+							field.onChange(e)
+
+							onChange?.()
+						}}
 						label={label}
 						error={!!form.formState.errors[name]}
 						disabled={disabled}
-						fullWidth={fullwidth}
+						fullWidth
 						defaultValue={''}
 					>
 						{options.length === 0 && (
@@ -61,7 +66,7 @@ export function FormSelectField({
 							</MenuItem>
 						))}
 					</Select>
-				</>
+				</Box>
 			)}
 		/>
 	)
