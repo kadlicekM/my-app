@@ -1,12 +1,19 @@
 import Grid from '@mui/material/Grid'
-// import SettingsIcon from '@mui/icons-material/Settings'
+import { useContext } from 'react'
+import { Outlet, Navigate } from 'react-router-dom'
 
 import Menu from '../menu/menu'
-import { Outlet } from 'react-router-dom'
 
-//ghostwhite farba bgcolor
+import { UserContext } from 'components/user/userContext'
+import { ROUTES } from 'constants/routes'
 
 export function Layout() {
+	const { user } = useContext(UserContext)
+
+	if (user?.role === 'ADMIN') {
+		return <Navigate to={ROUTES.admin} />
+	}
+
 	return (
 		<Grid container direction="row" height="100vh">
 			<Grid

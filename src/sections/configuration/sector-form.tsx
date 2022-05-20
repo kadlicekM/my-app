@@ -30,22 +30,18 @@ export function SectorForm({ areaOptions, isAreaLoading }: Props) {
 					Pridanie sektora
 				</Typography>
 				<Box display="flex" flexDirection="column">
-					<Grid container justifyContent="flex-start">
+					<Grid container alignItems="center">
 						<Grid item xs={6}>
 							<FormSelectField
 								label="Priestor"
-								sx={{ minWidth: 200 }}
+								sx={{ minWidth: 250 }}
 								name="area"
 								options={areaOptions}
 								disabled={isAreaLoading}
 							/>
 						</Grid>
 						<Grid item xs={6}>
-							<FormTextField
-								sx={{ height: '90px' }}
-								label="Priestor"
-								name="sector"
-							/>
+							<FormTextField label="Sektor" name="sector" />
 						</Grid>
 					</Grid>
 					<Button

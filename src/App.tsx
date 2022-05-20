@@ -5,12 +5,14 @@ import { ToastContainer } from 'react-toastify'
 import { Layout } from './components/layout/layout'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Homepage } from 'routes/homepage/homepage'
-import { Stats } from 'routes/stats/stats'
+import { Charts } from 'routes/stats/stats'
 import { Config } from 'routes/configuration/config'
 import { SignUpForm } from 'routes/sign-up/sign-up'
 import { SignIn } from 'routes/sign-in/sign-in'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { UserContextProvider } from 'components/user/userContextProvider'
+import { ROUTES } from 'constants/routes'
+import { Admin } from 'routes/admin/admin'
 
 const theme = createTheme({
 	palette: {
@@ -26,22 +28,27 @@ function App() {
 			<BrowserRouter>
 				<UserContextProvider>
 					<Routes>
-						<Route path="/sign-in" element={<SignIn />} />
-						<Route path="/sign-up" element={<SignUpForm />} />
+						<Route path={ROUTES.signIn} element={<SignIn />} />
+						<Route path={ROUTES.signUp} element={<SignUpForm />} />
 
-						<Route path="/" element={<Layout />}>
+						<Route path={ROUTES.admin} element={<Admin />} />
+
+						<Route path={ROUTES.home} element={<Layout />}>
 							<Route index element={<Homepage />} />
-							<Route element={<Stats />} path="grafy" />
-							<Route element={<Config />} path="konfiguracia" />
+							<Route element={<Charts />} path={ROUTES.charts} />
+							<Route element={<Config />} path={ROUTES.config} />
 						</Route>
 
-						<Route element={<>hups! 404 </>} path="*" />
+						<Route
+							element={<>404 | Stranka neexistuje </>}
+							path={ROUTES[404]}
+						/>
 					</Routes>
 				</UserContextProvider>
 			</BrowserRouter>
 
 			<ToastContainer
-				position="bottom-center"
+				position="bottom-left"
 				autoClose={3000}
 				hideProgressBar={false}
 				newestOnTop={false}

@@ -1,15 +1,17 @@
-import { TextField } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { Controller, useFormContext } from 'react-hook-form'
-import { SxProps } from '@mui/system'
+import { Box, SxProps } from '@mui/system'
 import { Theme } from '@mui/material'
 
 type Props = {
 	name: string
 	label: string
 	sx?: SxProps<Theme>
+	type?: 'text' | 'number'
 }
 
-export function FormTextField({ name, label, sx }: Props) {
+export function FormTextField({ name, label, sx, type }: Props) {
 	const form = useFormContext()
 
 	if (!form) {
@@ -21,14 +23,19 @@ export function FormTextField({ name, label, sx }: Props) {
 			name={name}
 			control={form.control}
 			render={({ field }) => (
-				<TextField
-					{...field}
-					label={label}
-					sx={{ ...sx }}
-					variant="outlined"
-					error={!!form.formState.errors[name]}
-					helperText={form.formState.errors[name]?.message ?? ''}
-				/>
+				<Box display="flex" flexDirection="column" mb={1} height="72px">
+					<TextField
+						{...field}
+						label={label}
+						sx={sx}
+						type={type}
+						variant="standard"
+						error={!!form.formState.errors[name]}
+						fullWidth
+						defaultValue={''}
+					/>
+					<Typography>{form.formState.errors[name]?.message ?? ''}</Typography>
+				</Box>
 			)}
 		/>
 	)

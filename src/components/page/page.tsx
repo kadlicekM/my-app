@@ -1,7 +1,7 @@
-import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import { Grid } from '@mui/material'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
 type PageProps = {
 	headerLabel: string
@@ -10,22 +10,24 @@ type PageProps = {
 
 export function Page({ headerLabel, children }: PageProps) {
 	return (
-		<Grid container direction="row">
-			<Grid item xs={12}>
-				<Typography
-					variant="h4"
-					align="center"
-					gutterBottom={true}
-					//sx={{ display: 'flex', alignContent: 'center' }}
-				>
+		<Box sx={{ height: '100vh', overflow: 'scroll' }}>
+			<Box
+				sx={{
+					position: 'sticky',
+					top: 0,
+					backgroundColor: '#fff',
+					zIndex: 100,
+				}}
+			>
+				<Typography variant="h4" align="center" p={2}>
 					{headerLabel}
 				</Typography>
 				<Divider />
-			</Grid>
+			</Box>
 
-			<Grid container direction="column">
+			<Grid container direction="column" p={2}>
 				{children}
 			</Grid>
-		</Grid>
+		</Box>
 	)
 }

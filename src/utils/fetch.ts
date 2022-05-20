@@ -8,7 +8,7 @@ interface FetchType {
 export async function apiAuthFetch<T>(
 	url: string,
 	{ ...rest }: FetchType = {},
-): Promise<T | void> {
+): Promise<T | undefined> {
 	const options = { ...rest }
 
 	const token = localStorage.getItem('token')

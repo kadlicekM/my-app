@@ -1,14 +1,17 @@
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
+
 import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import PersonIcon from '@mui/icons-material/Person'
 import Divider from '@mui/material/Divider'
-import { Link } from 'react-router-dom'
 import { BottomInfo } from 'components/menu/bottom-data'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Box } from '@mui/system'
-import { useContext } from 'react'
+
 import { UserContext } from 'components/user/userContext'
+import { ROUTES } from 'constants/routes'
 
 type MenuItem = {
 	label: string
@@ -18,15 +21,15 @@ type MenuItem = {
 const MenuItems: MenuItem[] = [
 	{
 		label: 'HLAVNÁ STRÁNKA',
-		path: '/',
+		path: ROUTES.home,
 	},
 	{
 		label: 'GRAFY',
-		path: 'grafy',
+		path: ROUTES.charts,
 	},
 	{
 		label: 'KONFIGURÁCIA',
-		path: 'konfiguracia',
+		path: ROUTES.config,
 	},
 ]
 
@@ -35,7 +38,7 @@ function Menu() {
 
 	return (
 		<>
-			<Typography variant="h4" align="center" gutterBottom={true}>
+			<Typography variant="h4" align="center" p={2}>
 				Menu
 			</Typography>
 			<Divider />

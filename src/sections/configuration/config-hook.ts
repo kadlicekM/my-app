@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { LabeledValue } from 'components/form/form-select-field'
+import { AreaResult } from 'models'
 import { apiAuthFetch } from 'utils/fetch'
-import { AreaResult } from './types'
 
 export function useConfiguration() {
 	const [areaOptions, setAreaOptions] = useState<LabeledValue[]>([])
@@ -31,7 +31,7 @@ export function useConfiguration() {
 	}
 
 	async function createArea(name: string) {
-		const res = await apiAuthFetch('http://localhost:5000/api/area/getAll', {
+		const res = await apiAuthFetch('http://localhost:5000/api/area', {
 			method: 'POST',
 			body: JSON.stringify({ description: name }),
 		})

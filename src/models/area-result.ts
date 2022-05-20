@@ -1,7 +1,4 @@
-type Area = {
-	description: string
-	id: string
-}
+import { Area } from './area'
 
 export type AreaResult = {
 	areas: Array<Area>

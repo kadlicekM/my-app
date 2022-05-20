@@ -1,43 +1,69 @@
-import Select from '@mui/material/Select'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import { Button, MenuItem } from '@mui/material'
+import { Button } from '@mui/material'
 
 import { Chart } from 'components/chart/chart'
-import { useState } from 'react'
-
-const sensors = [
-	{ name: 'tlak', type: 'PRESSURE' },
-	{ name: 'vlhkost', type: 'HUMIDITY' },
-	{ name: 'teplota', type: 'TEMPERATURE' },
-]
+import { FormProvider, useForm } from 'react-hook-form'
+import { FormSelectField } from 'components/form/form-select-field'
 
 export function ChartLayout() {
-	const [selectedSensor, setSelectedSensor] = useState<string>('')
+	const form = useForm()
+
+	const onSubmit = (data: any) => console.log(data)
 
 	return (
-		<Grid container mt={5}>
-			<Grid item xs={9}>
-				<Chart />
-			</Grid>
-			<Grid item xs={3}>
-				<Box display="flex" flexDirection="column">
-					<Select
-						value={selectedSensor}
-						onChange={e => {
-							setSelectedSensor(e.target.value)
-						}}
-					>
-						{sensors.map(item => (
-							<MenuItem key={item.type} value={item.type}>
-								{item.name}
-							</MenuItem>
-						))}
-					</Select>
-				</Box>
+		<FormProvider {...form}>
+			<Grid container mt={5}>
+				<Grid item xs={12}>
+					<form>
+						<Box
+							sx={{
+								display: 'grid',
+								gridTemplateColumns: 'repeat(5, 1fr)',
+								gap: 2,
+							}}
+						>
+							<FormSelectField
+								name="area"
+								label="Area"
+								options={[]}
+								fullwidth={false}
+							/>
+							<FormSelectField
+								name="sector"
+								label="Sector"
+								options={[]}
+								fullwidth={false}
+							/>
+							<FormSelectField
+								name="sensor"
+								label="Sensor"
+								options={[]}
+								fullwidth={false}
+							/>
+							<FormSelectField
+								name="type"
+								label="Typ"
+								options={[]}
+								fullwidth={false}
+							/>
+							<FormSelectField
+								name="periodicity"
+								label="Perioda"
+								options={[]}
+								fullwidth={false}
+							/>
+						</Box>
 
-				<Button onClick={() => {}}>Confirm</Button>
+						<Button type="submit" onClick={() => {}}>
+							Confirm
+						</Button>
+					</form>
+				</Grid>
+				<Grid item xs={12}>
+					<Chart />
+				</Grid>
 			</Grid>
-		</Grid>
+		</FormProvider>
 	)
 }

@@ -54,7 +54,7 @@ type Props = {
 
 export function Chart({ sensor, periodicity }: Props) {
 	return (
-		<ResponsiveContainer height={500} minWidth={600} width="100%">
+		<ResponsiveContainer height={800} minWidth={600} width="100%">
 			<LineChart data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis dataKey="time" />
