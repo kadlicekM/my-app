@@ -11,7 +11,7 @@ type Props = {
 	type?: 'text' | 'number'
 }
 
-export function FormTextField({ name, label, sx, type }: Props) {
+export function FormTextField({ name, label, sx, type = 'text' }: Props) {
 	const form = useFormContext()
 
 	if (!form) {
@@ -23,12 +23,11 @@ export function FormTextField({ name, label, sx, type }: Props) {
 			name={name}
 			control={form.control}
 			render={({ field }) => (
-				<Box display="flex" flexDirection="column" mb={1} height="72px">
+				<Box display="flex" flexDirection="column" mb={2} height={90}>
 					<TextField
 						{...field}
 						label={label}
 						sx={sx}
-						type={type}
 						variant="standard"
 						error={!!form.formState.errors[name]}
 						fullWidth
