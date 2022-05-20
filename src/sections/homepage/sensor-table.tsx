@@ -5,110 +5,60 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 import { Table } from 'components/table/table'
 import { TableColumn } from 'components/table/types'
-import { Sensor, SensorType } from 'models'
+import { Sensor, SensorType, Result } from 'models'
+import { apiAuthFetch } from 'utils/fetch'
+import { toast } from 'react-toastify'
 
-const data: Array<Sensor> = [
-	{
-		id: '1',
-		sensor: 'FAKOE123',
-		sector: 'kitchen',
-		area: 'house',
-		sensor_types: [
-			{
-				id: '1',
-				note: 'pressure',
-				min_value: '50',
-				max_value: '110',
-				unit: 'kPa',
-			},
-			{
-				id: '3',
-				note: 'temperature',
-				min_value: '-40',
-				max_value: '150',
-				unit: 'C',
-			},
-		],
-	},
-	{
-		id: '2',
-		sensor: 'EEBNNN',
-		sector: 'living_room',
-		area: 'house',
-		sensor_types: [
-			{
-				id: '2',
-				note: 'humidity',
-				min_value: '0',
-				max_value: '100',
-				unit: '%',
-			},
-			{
-				id: '3',
-				note: 'temperature',
-				min_value: '-40',
-				max_value: '150',
-				unit: 'C',
-			},
-		],
-	},
-	{
-		id: '3',
-		sensor: 'CXZC0123',
-		sector: 'bedroom',
-		area: 'house',
-		sensor_types: [
-			{
-				id: '1',
-				note: 'pressure',
-				min_value: '50',
-				max_value: '110',
-				unit: 'kPa',
-			},
-			{
-				id: '3',
-				note: 'temperature',
-				min_value: '-40',
-				max_value: '150',
-				unit: 'C',
-			},
-		],
-	},
-]
-
-const columns: Array<TableColumn<Sensor>> = [
-	{
-		label: 'ID',
-		selector: 'id',
-	},
-	{
-		label: 'Sensor name',
-		selector: 'sensor',
-	},
-	{
-		label: 'Area',
-		selector: 'area',
-	},
-	{
-		label: 'Sector',
-		selector: 'sector',
-	},
-	{
-		label: 'Actions',
-		selector: '',
-		Cell: ({ rowData }) => {
-			const handleDelete = () => {
-				alert(rowData.id)
-			}
-
-			return (
-				<IconButton onClick={handleDelete}>
-					<DeleteForeverIcon color="primary" />
-				</IconButton>
-			)
+const useColumns = (
+	refreshFn: () => Promise<void>,
+): Array<TableColumn<Sensor>> => {
+	return [
+		{
+			label: 'UID',
+			selector: 'uid',
 		},
-	},
-]
+		{
+			label: 'Sensor name',
+			selector: 'sensor',
+		},
+		{
+			label: 'Area',
+			selector: 'area',
+		},
+		{
+			label: 'Sector',
+			selector: 'sector',
+		},
+		{
+			label: 'Actions',
+			selector: '',
+			Cell: ({ rowData }) => {
+				const handleDelete = async () => {
+					const res = await apiAuthFetch<Result<unknown>>(
+						'http://localhost:5000/api/sensor/delete',
+						{
+							method: 'DELETE',
+							body: JSON.stringify({ id: rowData.id }),
+						},
+					)
+
+					if (res?.ok) {
+						console.log('uspesne')
+						refreshFn()
+					} else {
+						toast('zle', { type: 'error' })
+					}
+				}
+
+				return (
+					<IconButton onClick={handleDelete}>
+						<DeleteForeverIcon color="primary" />
+					</IconButton>
+				)
+			},
+		},
+	]
+}
 
 const sensorTypesColumns: Array<TableColumn<SensorType>> = [
 	{
@@ -154,7 +104,12 @@ function SensorTableExtendComponent({ data }: SensorExtendContent) {
 	)
 }
 
-export function SensorTable() {
+type Props = {
+	data: Array<Sensor>
+	refreshData: () => Promise<void>
+}
+
+export function SensorTable({ data, refreshData }: Props) {
 	return (
 		<>
 			<Typography variant="h4" mt={3} mb={2} sx={{ color: '#ef5350' }}>
@@ -163,7 +118,7 @@ export function SensorTable() {
 
 			<Table
 				data={data}
-				columns={columns}
+				columns={useColumns(refreshData)}
 				ExtendContent={SensorTableExtendComponent}
 			/>
 		</>
