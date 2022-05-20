@@ -6,8 +6,8 @@ import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 
 export type LabeledValue = {
-	value: string
-	label: string
+	id: number | string
+	description: string
 }
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 	options: LabeledValue[]
 	sx?: SxProps<Theme>
 	disabled?: boolean
-	onChange?: () => void
+	onChange?: (value: number) => void
 }
 
 export function FormSelectField({
@@ -46,7 +46,7 @@ export function FormSelectField({
 						onChange={e => {
 							field.onChange(e)
 
-							onChange?.()
+							onChange?.(e.target.value)
 						}}
 						label={label}
 						error={!!form.formState.errors[name]}
@@ -60,9 +60,9 @@ export function FormSelectField({
 							</MenuItem>
 						)}
 
-						{options.map(({ value, label }) => (
-							<MenuItem key={value} value={value}>
-								{label}
+						{options.map(({ id, description }) => (
+							<MenuItem key={id} value={String(id)}>
+								{description}
 							</MenuItem>
 						))}
 					</Select>

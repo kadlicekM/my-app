@@ -16,15 +16,8 @@ export function useConfiguration() {
 			'http://localhost:5000/api/area/getAll',
 		)
 
-		// The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined.
-		const processedOptions: LabeledValue[] =
-			res?.areas.map(({ id, description }) => ({
-				value: id,
-				label: description,
-			})) ?? []
-
-		if (processedOptions.length > 0) {
-			setAreaOptions(processedOptions)
+		if (res?.areas) {
+			setAreaOptions(res.areas ?? [])
 		}
 
 		setIsLoading(false)

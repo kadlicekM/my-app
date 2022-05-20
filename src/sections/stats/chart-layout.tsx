@@ -8,15 +8,16 @@ import { FormSelectField } from 'components/form/form-select-field'
 import { FormDatepicker } from 'components/form/form-datepicker'
 import { periodicityOptions } from './api'
 import { calculateDateFrom, calculateDateTo } from './utils'
+import { useStats } from 'routes/stats/stats-hook'
 
 type FormValues = {
 	from: Date
 	to: Date
 	periodicity: 'hour' | 'day' | 'week' | 'month' | 'year'
-	area: string
-	sector: string
-	sensor: string
-	type: string
+	area?: number
+	sector?: number
+	sensor?: number
+	type?: number
 }
 
 export function ChartLayout() {
@@ -25,16 +26,18 @@ export function ChartLayout() {
 			from: addDays(new Date(), -1),
 			to: new Date(),
 			periodicity: 'hour',
-			area: '',
-			sector: '',
-			sensor: '',
-			type: '',
 		},
 	})
 
-	const onSubmit = (data: any) => console.log(data)
-
 	const values = form.watch()
+
+	const { areas, sensors, sectors, types, getSectors, getSensors, getTypes } =
+		useStats()
+
+	const onSubmit = (data: any) => console.log(data)
+	console.log(sectors)
+	// form.setValue('sector'un,)
+	console.log(values.area)
 
 	return (
 		<FormProvider {...form}>
@@ -51,28 +54,44 @@ export function ChartLayout() {
 								sx={{ mr: 4 }}
 								name="area"
 								label="Area"
-								options={[]}
+								options={areas}
+								onChange={selectedValue => {
+									getSectors(Number(selectedValue))
+									form.setValue('sector', undefined)
+								}}
 							/>
 							<FormSelectField
 								sx={{ mr: 4 }}
 								name="sector"
 								label="Sector"
-								options={[]}
+								options={sectors}
 								disabled={!values.area}
+								onChange={selectedValue => {
+									getSensors(Number(selectedValue))
+									form.setValue('sensor', undefined)
+									form.setValue('type', undefined)
+								}}
 							/>
 							<FormSelectField
 								sx={{ mr: 4 }}
 								name="sensor"
 								label="Sensor"
-								options={[]}
+								options={sensors}
 								disabled={!values.sector}
+								onChange={selectedValue => {
+									getTypes(Number(selectedValue))
+									form.setValue('type', undefined)
+								}}
 							/>
 							<FormSelectField
 								sx={{ mr: 4 }}
 								name="type"
 								label="Typ"
-								options={[]}
+								options={types}
 								disabled={!values.sensor}
+								onChange={selectedValue => {
+									// Todo get data
+								}}
 							/>
 							<FormSelectField
 								name="periodicity"

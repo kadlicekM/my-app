@@ -2,23 +2,23 @@ import { LabeledValue } from 'components/form/form-select-field'
 
 export const periodicityOptions: LabeledValue[] = [
 	{
-		label: 'Hodina',
-		value: 'hour',
+		description: 'Hodina',
+		id: 'hour',
 	},
 	{
-		label: 'Den',
-		value: 'day',
+		description: 'Den',
+		id: 'day',
 	},
 	{
-		label: 'Tyzden',
-		value: 'week',
+		description: 'Tyzden',
+		id: 'week',
 	},
 	{
-		label: 'Mesiac',
-		value: 'month',
+		description: 'Mesiac',
+		id: 'month',
 	},
 	{
-		label: 'Rok',
-		value: 'year',
+		description: 'Rok',
+		id: 'year',
 	},
 ]
