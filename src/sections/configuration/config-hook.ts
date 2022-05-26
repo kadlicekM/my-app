@@ -32,8 +32,8 @@ export function useConfiguration() {
 		if (res) {
 			getAreaOptions()
 		} else {
-			toast('Area sa nepodarila pridat', {
-				type: 'error',
+			toast('Area bola pridaná', {
+				type: 'success',
 			})
 		}
 	}
@@ -42,9 +42,40 @@ export function useConfiguration() {
 		getAreaOptions()
 	}, [])
 
+	async function createSector(name: string) {
+		const res = await apiAuthFetch('http://localhost:5000/api/area', {
+			method: 'POST',
+			body: JSON.stringify({ description: name }),
+		})
+
+		if (res) {
+			getAreaOptions()
+		} else {
+			toast('Sektor bol pridaný', {
+				type: 'success',
+			})
+		}
+	}
+
+	async function createSensor(name: string) {
+		const res = await apiAuthFetch('http://localhost:5000/api/area', {
+			method: 'POST',
+			body: JSON.stringify({ description: name }),
+		})
+
+		if (res) {
+			getAreaOptions()
+		} else {
+			toast('Senzor bol pridaný', {
+				type: 'success',
+			})
+		}
+	}
 	return {
 		isLoading,
 		areaOptions,
 		createArea,
+		createSector,
+		createSensor,
 	}
 }

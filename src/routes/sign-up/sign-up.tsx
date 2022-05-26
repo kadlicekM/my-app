@@ -11,14 +11,14 @@ import { FormTextField } from 'components/form/form-text-field'
 
 const schema = yup.object({
 	username: yup.string().required('Username is required'),
-	password: yup.string().min(12, 'Min 12 znakov').required('Required'),
+	password: yup.string().min(8, 'Min 12 znakov').required('Required'),
 	passwordAgain: yup
 		.string()
 		.equals([yup.ref('password')], 'Zadané heslá nie sú rovnaké')
 		.required(),
 	name: yup.string().required('Povinné vyplniť'),
 	surname: yup.string().required('Povinné vyplniť'),
-	email: yup.string().required('Povinné vyplniť'),
+	email: yup.string().email('Zlý formát emailu!'),
 })
 
 type SignUpValues = {
@@ -78,12 +78,16 @@ export function SignUpForm() {
 							<Grid item xs={6}>
 								<FormTextField label="Meno" name="name" />
 								<FormTextField label="Prihlasovacie meno" name="username" />
-								<FormTextField label="Heslo" name="password" />
+								<FormTextField label="Heslo" name="password" type="password" />
 							</Grid>
 							<Grid item xs={6}>
 								<FormTextField label="Priezvisko" name="surname" />
 								<FormTextField label="Email" name="email" />
-								<FormTextField label="Potvrdenie hesla" name="passwordAgain" />
+								<FormTextField
+									label="Potvrdenie hesla"
+									name="passwordAgain"
+									type="password"
+								/>
 							</Grid>
 						</Grid>
 						<Box

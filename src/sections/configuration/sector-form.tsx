@@ -13,23 +13,36 @@ import {
 type Props = {
 	areaOptions: LabeledValue[]
 	isAreaLoading: boolean
+	createFunction: (name: string) => Promise<void>
 }
 
-export function SectorForm({ areaOptions, isAreaLoading }: Props) {
+export function SectorForm({
+	areaOptions,
+	isAreaLoading,
+	createFunction,
+}: Props) {
 	const form = useForm()
 
+	const onSubmit = async (data: any) => {
+		await createFunction(data.sector)
+	}
 	return (
 		<FormProvider {...form}>
-			<form onSubmit={form.handleSubmit(() => console.log('sector form'))}>
+			<form onSubmit={form.handleSubmit(onSubmit)}>
 				<Typography
 					variant="h4"
 					sx={{ color: theme => theme.palette.primary.main }}
-					mb={2}
 					mt={3}
+					pl={2}
 				>
 					Pridanie sektora
 				</Typography>
-				<Box display="flex" flexDirection="column">
+				<Box
+					display="flex"
+					flexDirection="column"
+					marginTop="30px"
+					paddingLeft="16px"
+				>
 					<Grid container alignItems="center">
 						<Grid item xs={6}>
 							<FormSelectField
@@ -41,7 +54,11 @@ export function SectorForm({ areaOptions, isAreaLoading }: Props) {
 							/>
 						</Grid>
 						<Grid item xs={6}>
-							<FormTextField label="Sektor" name="sector" />
+							<FormTextField
+								label="Názov sektoru"
+								name="sector"
+								sx={{ marginTop: '22px' }}
+							/>
 						</Grid>
 					</Grid>
 					<Button
@@ -50,7 +67,7 @@ export function SectorForm({ areaOptions, isAreaLoading }: Props) {
 						color="primary"
 						sx={{ width: '40%', justifyContent: 'center' }}
 					>
-						Submit
+						Pridať
 					</Button>
 				</Box>
 			</form>

@@ -9,6 +9,9 @@ import { FormDatepicker } from 'components/form/form-datepicker'
 import { periodicityOptions } from './api'
 import { calculateDateFrom, calculateDateTo } from './utils'
 import { useStats } from 'routes/stats/stats-hook'
+import { Button } from '@mui/material'
+import { apiAuthFetch } from 'utils/fetch'
+import { Result } from 'models'
 
 type FormValues = {
 	from: Date
@@ -31,13 +34,39 @@ export function ChartLayout() {
 
 	const values = form.watch()
 
-	const { areas, sensors, sectors, types, getSectors, getSensors, getTypes } =
-		useStats()
+	const {
+		areas,
+		sensors,
+		sectors,
+		types,
+		chartData,
+		getSectors,
+		getSensors,
+		getTypes,
+		setChartData,
+	} = useStats()
 
-	const onSubmit = (data: any) => console.log(data)
-	console.log(sectors)
-	// form.setValue('sector'un,)
-	console.log(values.area)
+	const onSubmit = (data: any) => fetchChartValues()
+	console.log(chartData)
+	const fetchChartValues = async () => {
+		console.log(values.type)
+		const res = await apiAuthFetch<Result<any>>(
+			'http://localhost:5000/api/data/chart',
+			{
+				method: 'POST',
+				body: JSON.stringify({
+					sensor_type_ids: [Number(values.type)],
+					interval: values.periodicity,
+					from: values.from,
+					to: values.to,
+				}),
+			},
+		)
+		console.log(res)
+		if (res?.ok) {
+			setChartData(res.data)
+		}
+	}
 
 	return (
 		<FormProvider {...form}>
@@ -58,12 +87,14 @@ export function ChartLayout() {
 								onChange={selectedValue => {
 									getSectors(Number(selectedValue))
 									form.setValue('sector', undefined)
+									form.setValue('sensor', undefined)
+									form.setValue('type', undefined)
 								}}
 							/>
 							<FormSelectField
 								sx={{ mr: 4 }}
 								name="sector"
-								label="Sector"
+								label="Sektor"
 								options={sectors}
 								disabled={!values.area}
 								onChange={selectedValue => {
@@ -75,7 +106,7 @@ export function ChartLayout() {
 							<FormSelectField
 								sx={{ mr: 4 }}
 								name="sensor"
-								label="Sensor"
+								label="Senzor"
 								options={sensors}
 								disabled={!values.sector}
 								onChange={selectedValue => {
@@ -142,11 +173,24 @@ export function ChartLayout() {
 									form.setValue('from', dateFrom)
 								}}
 							/>
+							<Button
+								type="submit"
+								color="primary"
+								variant="contained"
+								sx={{
+									width: '200px',
+									height: '40px',
+									marginTop: '10px',
+									marginLeft: '30px',
+								}}
+							>
+								Potvrdiť
+							</Button>
 						</Box>
 					</form>
 				</Grid>
 				<Grid item xs={12}>
-					<Chart />
+					<Chart data={chartData[0]} />
 				</Grid>
 			</Grid>
 		</FormProvider>

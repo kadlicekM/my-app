@@ -14,8 +14,11 @@ import { UserContextProvider } from 'components/user/userContextProvider'
 import { UserContext } from 'components/user/userContext'
 
 const schema = yup.object({
-	username: yup.string().required('Username is required'),
-	//	password: yup.string().min(12, 'Min 12 znakov').required('Required'),
+	username: yup.string().required('Používateľské meno je povinné'),
+	password: yup
+		.string()
+		// .min(12, 'Zadané používateľské meno alebo heslo nie je platné')
+		.required('Heslo je povinné'),
 })
 
 type SignUpValues = {
@@ -68,7 +71,7 @@ export function SignIn() {
 								/>
 							</Grid>
 							<Grid item width="300px">
-								<FormTextField label="Heslo" name="password" />
+								<FormTextField label="Heslo" name="password" type="password" />
 							</Grid>
 						</Grid>
 

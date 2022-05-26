@@ -31,16 +31,17 @@ export function AreaForm({ createFunction }: Props) {
 				<Typography
 					variant="h4"
 					sx={{ color: theme => theme.palette.primary.main }}
-					mb={2}
+					mb={4}
+					pl={2}
 				>
 					Pridanie priestoru
 				</Typography>
-				<Box display="flex" flexDirection="column">
+				<Box display="flex" flexDirection="column" paddingLeft="16px">
 					<Grid container justifyContent="flex-start">
 						<Grid item xs={6}>
 							<FormTextField
 								sx={{ height: '90px' }}
-								label="Priestor"
+								label="Názov priestoru"
 								name="area"
 							/>
 						</Grid>
@@ -51,7 +52,7 @@ export function AreaForm({ createFunction }: Props) {
 						color="primary"
 						sx={{ width: '40%', justifyContent: 'center' }}
 					>
-						Submit
+						Pridať
 					</Button>
 				</Box>
 			</form>

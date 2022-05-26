@@ -1,9 +1,9 @@
 export const ROUTES = {
-	home: '/',
-	charts: '/charts',
+	home: '/dashboard',
+	charts: '/dashboard/charts',
 	signIn: '/sign-in',
 	signUp: '/sign-up',
-	config: '/configuration',
+	config: '/dashboard/configuration',
 	admin: '/admin',
 	404: '*',
 }

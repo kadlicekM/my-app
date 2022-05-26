@@ -9,12 +9,17 @@ export function useStats() {
 	const [sectors, setSectors] = useState<Array<LabeledValue>>([])
 	const [sensors, setSensors] = useState<Array<LabeledValue>>([])
 	const [types, setTypes] = useState<Array<LabeledValue>>([])
+	const [chartData, setChartData] = useState<any>({})
 
 	console.log({ areas })
 
+	useEffect(() => {
+		setChartData({})
+	}, [areas, sectors, sensors, types])
+
 	async function getAreas() {
 		const res = await apiAuthFetch<Result<Array<Area>>>(
-			'http://localhost:5000/api/area/get',
+			'http://localhost:5000/api/area',
 		)
 
 		console.log({ res })
@@ -29,11 +34,10 @@ export function useStats() {
 
 	async function getSectors(areaId: number) {
 		const res = await apiAuthFetch<Result<Array<LabeledValue>>>(
-			'http://localhost:5000/api/sector/get',
+			'http://localhost:5000/api/sector',
 			{ method: 'POST', body: JSON.stringify({ area_id: areaId }) },
 		)
 
-		console.log({ res })
 		if (res?.ok) {
 			await setSectors(res.data)
 			setSensors([])
@@ -43,7 +47,7 @@ export function useStats() {
 
 	async function getSensors(sectorId: number) {
 		const res = await apiAuthFetch<Result<Array<LabeledValue>>>(
-			'http://localhost:5000/api/sensor/get',
+			'http://localhost:5000/api/sensor',
 			{ method: 'POST', body: JSON.stringify({ sector_id: sectorId }) },
 		)
 
@@ -55,7 +59,7 @@ export function useStats() {
 
 	async function getTypes(sensorId: number) {
 		const res = await apiAuthFetch<Result<Array<LabeledValue>>>(
-			'http://localhost:5000/api/sensor_type/get',
+			'http://localhost:5000/api/sensor_type',
 			{ method: 'POST', body: JSON.stringify({ sensor_id: sensorId }) },
 		)
 
@@ -74,8 +78,10 @@ export function useStats() {
 		sectors,
 		sensors,
 		types,
+		chartData,
 		getSectors,
 		getSensors,
 		getTypes,
+		setChartData,
 	}
 }

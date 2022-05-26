@@ -21,17 +21,22 @@ import { useConfiguration } from 'sections/configuration/config-hook'
 // })
 
 export function Config() {
-	const { areaOptions, createArea, isLoading } = useConfiguration()
+	const { areaOptions, createArea, createSector, createSensor, isLoading } =
+		useConfiguration()
 
 	return (
 		<Page headerLabel="Konfigurácia">
 			<Grid container pr={3} pl={3} mt={3} mb={3}>
 				<Grid item xs={6}>
-					<SensorForm />
+					<SensorForm createFunction={createSensor} />
 				</Grid>
 				<Grid item xs={6}>
 					<AreaForm createFunction={createArea} />
-					<SectorForm areaOptions={areaOptions} isAreaLoading={isLoading} />
+					<SectorForm
+						createFunction={createSector}
+						areaOptions={areaOptions}
+						isAreaLoading={isLoading}
+					/>
 				</Grid>
 			</Grid>
 		</Page>

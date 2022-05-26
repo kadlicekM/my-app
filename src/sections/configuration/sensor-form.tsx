@@ -15,7 +15,15 @@ import { IconButton } from '@mui/material'
 
 const defaultSensorTypeValue = { id: v4() }
 
-export function SensorForm() {
+type Props = {
+	createFunction: (name: string) => Promise<void>
+}
+
+type SensorFormValues = {
+	sensor: string
+}
+
+export function SensorForm({ createFunction }: Props) {
 	const form = useForm({
 		defaultValues: {
 			sensorTypes: [],
@@ -40,11 +48,13 @@ export function SensorForm() {
 		})
 	}
 
+	const onSubmit = async (data: any) => {
+		await createFunction(data.sensor)
+	}
+
 	return (
 		<FormProvider {...form}>
-			<form
-				onSubmit={form.handleSubmit(d => console.log('senzor form', { d }))}
-			>
+			<form onSubmit={form.handleSubmit(onSubmit)}>
 				<Typography
 					variant="h4"
 					mb={2}
@@ -75,7 +85,7 @@ export function SensorForm() {
 							onClick={handleAddSensorType}
 							startIcon={<AddCircleOutlineIcon />}
 						>
-							Add sensor type
+							Ďalší typ senzora
 						</Button>
 					</Box>
 				</Box>
@@ -85,7 +95,7 @@ export function SensorForm() {
 					color="primary"
 					sx={{ mt: 2, ml: 2, width: 250, p: 1 }}
 				>
-					Submit
+					Pridať
 				</Button>
 			</form>
 		</FormProvider>

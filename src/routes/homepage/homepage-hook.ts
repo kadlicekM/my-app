@@ -8,7 +8,7 @@ export function useHomePageData() {
 
 	async function getHomepageData() {
 		const res = await apiAuthFetch<Result<Array<Sensor>>>(
-			'http://localhost:5000/api/sensor/getAll',
+			'http://localhost:5000/api/sensor/all',
 		)
 
 		if (res) {

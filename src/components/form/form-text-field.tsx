@@ -8,7 +8,7 @@ type Props = {
 	name: string
 	label: string
 	sx?: SxProps<Theme>
-	type?: 'text' | 'number'
+	type?: 'text' | 'number' | 'password'
 }
 
 export function FormTextField({ name, label, sx, type = 'text' }: Props) {
@@ -29,6 +29,7 @@ export function FormTextField({ name, label, sx, type = 'text' }: Props) {
 						label={label}
 						sx={sx}
 						variant="standard"
+						type={type}
 						error={!!form.formState.errors[name]}
 						fullWidth
 						defaultValue={''}

@@ -81,11 +81,11 @@ function useColumns({
 		},
 		{
 			selector: 'login',
-			label: 'Uzivatelske meno',
+			label: 'Užívateľske meno',
 		},
 		{
 			selector: 'isActive',
-			label: 'Aktivovany',
+			label: 'Aktivovaný',
 			Cell: activateUserCell({ getUsers }),
 		},
 		{
