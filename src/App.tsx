@@ -39,10 +39,7 @@ function App() {
 							<Route element={<Config />} path={ROUTES.config} />
 						</Route>
 
-						<Route
-							element={<>404 | Stranka neexistuje </>}
-							path={ROUTES[404]}
-						/>
+						<Route element={<>404 | Stranka neexistuje</>} path={ROUTES[404]} />
 					</Routes>
 				</UserContextProvider>
 			</BrowserRouter>

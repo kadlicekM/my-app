@@ -1,3 +1,5 @@
+import { SignUpValues } from 'routes/sign-up/sign-up'
+
 export type User = {
 	login: string
 	id: string //change to uid later
@@ -19,4 +21,5 @@ export type UserContextType = {
 	user?: User
 	loginUser: (username: string, password: string) => Promise<void>
 	logoutUser: () => void
+	signUp: (data: SignUpValues) => Promise<void>
 }

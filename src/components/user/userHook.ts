@@ -4,6 +4,8 @@ import jwt_decode from 'jwt-decode'
 import { ROUTES } from 'constants/routes'
 
 import { AuthResult, User, UserContextType, JWT } from './types'
+import { SignUpValues } from 'routes/sign-up/sign-up'
+import { toast } from 'react-toastify'
 
 export const useUser = (): UserContextType => {
 	const navigate = useNavigate()
@@ -56,10 +58,36 @@ export const useUser = (): UserContextType => {
 		localStorage.removeItem('token')
 		navigate(ROUTES.signIn)
 	}
+
+	async function signUp(data: SignUpValues) {
+		try {
+			const response = await fetch('http://localhost:5000/api/user/sign-up', {
+				method: 'POST',
+				body: JSON.stringify({
+					...data,
+					login: data.username,
+					passwordAgain: undefined,
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+
+			if (!response.ok) {
+				throw new Error(response.statusText)
+			}
+
+			toast('Uzivatel bol uspesne vytvoreny', { type: 'success' })
+		} catch (err) {
+			toast('Pri pokuse vytvorit uzivatela nastala chyba', { type: 'error' })
+		}
+	}
+
 	//subscribe to
 	return {
 		user,
 		loginUser: login,
 		logoutUser: logout,
+		signUp,
 	}
 }

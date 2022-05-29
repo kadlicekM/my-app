@@ -1,13 +1,14 @@
-import { useForm, Controller, FormProvider } from 'react-hook-form'
+import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Textfield from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { Grid } from '@mui/material'
 import { ReactComponent as Bottom } from 'images/bottom.svg'
 import { FormTextField } from 'components/form/form-text-field'
+import { useContext } from 'react'
+import { UserContext } from 'components/user/userContext'
 
 const schema = yup.object({
 	username: yup.string().required('Username is required'),
@@ -21,7 +22,7 @@ const schema = yup.object({
 	email: yup.string().email('Zlý formát emailu!'),
 })
 
-type SignUpValues = {
+export type SignUpValues = {
 	username: string
 	password: string
 	passwordAgain: string
@@ -36,7 +37,9 @@ export function SignUpForm() {
 		reValidateMode: 'onSubmit',
 	})
 
-	const onSubmit = (data: SignUpValues) => alert(JSON.stringify(data))
+	const { signUp } = useContext(UserContext)
+
+	const onSubmit = async (data: SignUpValues) => signUp(data)
 
 	return (
 		<FormProvider {...form}>

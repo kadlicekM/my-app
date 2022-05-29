@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import {
 	LineChart,
 	Line,
@@ -8,6 +9,7 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from 'recharts'
+import { format } from 'date-fns'
 
 // type Props = {
 // 	sensor?: 'TEMPERATURE' | 'PRESURE' | 'HUMIDITY'
@@ -15,16 +17,33 @@ import {
 // }
 type Props = {
 	data: any
+	periodicity?: 'hour' | 'day' | 'week' | 'month' | 'year'
 }
 
 // export function Chart({ sensor, periodicity }: Props) {
-export function Chart({ data }: Props) {
+export function Chart({ data, periodicity }: Props) {
 	// console.log(data.values)
+
+	const tickFormatter = useCallback(
+		(value: number | 'auto') => {
+			if (!value || value === 'auto') {
+				return ''
+			}
+
+			if (periodicity === 'hour') {
+				return format(new Date(value), 'dd.MM hh:mm')
+			}
+
+			return format(new Date(value), 'dd.MM')
+		},
+		[periodicity],
+	)
+
 	return (
 		<ResponsiveContainer height={600} minWidth={600} width="100%">
 			<LineChart data={data ? data.values : {}}>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="date" />
+				<XAxis dataKey="timestamp" tickFormatter={tickFormatter} />
 				<YAxis />
 				<Tooltip />
 				<Legend />
@@ -35,13 +54,6 @@ export function Chart({ data }: Props) {
 					stroke="#8884d8"
 					activeDot={{ r: 8 }}
 				/>
-
-				{/* <Line
-					type="monotone"
-					dataKey="pv"
-					stroke="#82ca9d"
-					activeDot={{ r: 8 }}
-				/> */}
 			</LineChart>
 		</ResponsiveContainer>
 	)

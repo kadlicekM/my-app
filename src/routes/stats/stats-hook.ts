@@ -11,8 +11,6 @@ export function useStats() {
 	const [types, setTypes] = useState<Array<LabeledValue>>([])
 	const [chartData, setChartData] = useState<any>({})
 
-	console.log({ areas })
-
 	useEffect(() => {
 		setChartData({})
 	}, [areas, sectors, sensors, types])
@@ -72,7 +70,6 @@ export function useStats() {
 		getAreas()
 	}, [])
 
-	console.log(sectors)
 	return {
 		areas,
 		sectors,

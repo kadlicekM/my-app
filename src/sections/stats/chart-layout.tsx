@@ -47,7 +47,7 @@ export function ChartLayout() {
 	} = useStats()
 
 	const onSubmit = (data: any) => fetchChartValues()
-	console.log(chartData)
+	console.log({ chartData })
 	const fetchChartValues = async () => {
 		console.log(values.type)
 		const res = await apiAuthFetch<Result<any>>(
@@ -190,7 +190,7 @@ export function ChartLayout() {
 					</form>
 				</Grid>
 				<Grid item xs={12}>
-					<Chart data={chartData[0]} />
+					<Chart data={chartData[0]} periodicity={values.periodicity} />
 				</Grid>
 			</Grid>
 		</FormProvider>
